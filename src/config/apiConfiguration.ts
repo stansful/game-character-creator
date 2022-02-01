@@ -10,6 +10,9 @@ export enum ConfigTypes {
   POSTGRES_DB = 'POSTGRES_DB',
 
   BCRYPT_SALT_OR_ROUNDS = 'BCRYPT_SALT_OR_ROUNDS',
+
+  JWT_SECRET = 'JWT_SECRET',
+  JWT_EXPIRATION_TIME = 'JWT_EXPIRATION_TIME',
 }
 
 export interface ApiConfiguration {
@@ -22,6 +25,9 @@ export interface ApiConfiguration {
   [ConfigTypes.POSTGRES_DB]: string;
 
   [ConfigTypes.BCRYPT_SALT_OR_ROUNDS]: number;
+
+  [ConfigTypes.JWT_SECRET]: string;
+  [ConfigTypes.JWT_EXPIRATION_TIME]: number;
 }
 
 export const config: ConfigFactory<ApiConfiguration> = () => ({
@@ -36,4 +42,7 @@ export const config: ConfigFactory<ApiConfiguration> = () => ({
   [ConfigTypes.BCRYPT_SALT_OR_ROUNDS]: Number(
     process.env.BCRYPT_SALT_OR_ROUNDS,
   ),
+
+  [ConfigTypes.JWT_SECRET]: process.env.JWT_SECRET,
+  [ConfigTypes.JWT_EXPIRATION_TIME]: Number(process.env.JWT_EXPIRATION_TIME),
 });

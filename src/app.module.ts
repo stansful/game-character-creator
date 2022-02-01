@@ -5,6 +5,7 @@ import { HashModule } from './hash/hash.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmConfigService } from './config/typeOrmConfig.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { TypeOrmConfigService } from './config/typeOrmConfig.service';
     }),
     UserModule,
     HashModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

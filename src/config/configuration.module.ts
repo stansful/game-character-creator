@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ApiConfiguration, config, ConfigTypes } from './apiConfiguration';
 import * as Joi from 'joi';
 import { TypeOrmConfigService } from './typeOrmConfig.service';
+import { JwtConfigService } from './jwtConfig.service';
 
 @Module({
   imports: [
@@ -17,10 +18,13 @@ import { TypeOrmConfigService } from './typeOrmConfig.service';
         [ConfigTypes.POSTGRES_USER]: Joi.string().required(),
         [ConfigTypes.POSTGRES_PASSWORD]: Joi.string().required(),
         [ConfigTypes.POSTGRES_DB]: Joi.string().required(),
+        [ConfigTypes.BCRYPT_SALT_OR_ROUNDS]: Joi.number().required(),
+        [ConfigTypes.JWT_SECRET]: Joi.string().required(),
+        [ConfigTypes.JWT_EXPIRATION_TIME]: Joi.number().required(),
       }),
     }),
   ],
-  providers: [TypeOrmConfigService],
-  exports: [TypeOrmConfigService],
+  providers: [TypeOrmConfigService, JwtConfigService],
+  exports: [TypeOrmConfigService, JwtConfigService],
 })
 export class ConfigurationModule {}
