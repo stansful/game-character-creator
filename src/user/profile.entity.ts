@@ -15,6 +15,6 @@ export class Profile {
   @Column()
   aboutMe: string;
 
-  @OneToOne(() => User, (user) => user.profile, { cascade: true })
+  @OneToOne(() => User, (user) => user.profile)
   user: User;
 }
