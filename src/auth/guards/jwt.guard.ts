@@ -16,7 +16,7 @@ export class JwtGuard implements CanActivate {
 
     try {
       const token = req.cookies.authorization.replace('Bearer ', '');
-      req.body = await this.jwtService.verifyAsync(token);
+      req.user = await this.jwtService.verifyAsync(token);
     } catch (e) {
       throw new UnauthorizedException('Access token malformed or expired');
     }

@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -13,7 +14,7 @@ import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signIn.dto';
 import { Response } from 'express';
 import { JwtGuard } from './guards/jwt.guard';
-import { JwtPayloadInterface } from './interfaces/jwtPayload.interface';
+import { ReqUserInterface } from './interfaces/reqUser.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -21,8 +22,8 @@ export class AuthController {
 
   @UseGuards(JwtGuard)
   @Get()
-  async giveMeMyJwtInfo(@Body() payload: JwtPayloadInterface) {
-    return payload;
+  async giveMeMyJwtInfo(@Req() req: ReqUserInterface) {
+    return req.user;
   }
 
   @Post('signUp')
