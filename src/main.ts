@@ -10,7 +10,7 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: false }));
 
   const configService: ConfigService<ApiConfiguration> = app.get(ConfigService);
   const port = configService.get(ConfigTypes.PORT);
