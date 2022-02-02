@@ -2,10 +2,12 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Profile } from './profile.entity';
+import { Character } from '../character/character.entity';
 
 @Entity()
 export class User {
@@ -24,4 +26,7 @@ export class User {
   @OneToOne(() => Profile, { eager: true, cascade: true })
   @JoinColumn()
   profile: Profile;
+
+  @OneToMany(() => Character, (character) => character.user, { eager: true })
+  characters: Character[];
 }
