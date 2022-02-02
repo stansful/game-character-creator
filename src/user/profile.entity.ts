@@ -9,7 +9,7 @@ export class Profile {
   @Column()
   profileName: string;
 
-  @Column({ enum: ['male', 'female', 'alien'] })
+  @Column({ type: 'enum', enum: ['male', 'female', 'alien'], default: 'alien' })
   gender: string;
 
   @Column()
