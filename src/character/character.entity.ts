@@ -1,11 +1,16 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../user/user.entity';
 
+@Entity()
 export class Character {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   characterName: string;
+
+  @Column()
+  age: number;
 
   @Column({ default: 10 })
   availablePoints: number;
@@ -39,4 +44,7 @@ export class Character {
 
   @Column({ default: 0 })
   metalWorking: number;
+
+  @ManyToOne(() => User, (user) => user.characters)
+  user: User;
 }
