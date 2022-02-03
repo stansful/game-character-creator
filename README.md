@@ -9,7 +9,7 @@ $ yarn install
 ## Running the app
 
 ```bash
-remove 'example' from env files.
+remove '.example' from env files.
 
 $ docker-compose up
     or
