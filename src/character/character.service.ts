@@ -8,23 +8,20 @@ import { Character } from './character.entity';
 import { Repository } from 'typeorm';
 import { CreateCharacterDto } from './dto/createCharacter.dto';
 import { UpdateCharacterInfoDto } from './dto/updateCharacterInfo.dto';
-import { UserService } from '../user/user.service';
 import { UpdateCharacterStatsDto } from './dto/updateCharacterStats.dto';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class CharacterService {
   constructor(
     @InjectRepository(Character)
     private characterRepository: Repository<Character>,
-    private userService: UserService,
   ) {}
 
   public async createCharacter(
     characterDto: CreateCharacterDto,
-    id: number,
+    user: User,
   ): Promise<Character> {
-    const user = await this.userService.getById(id);
-
     const newCharacter = this.characterRepository.create({
       ...characterDto,
       user,
@@ -33,16 +30,14 @@ export class CharacterService {
     return this.characterRepository.save(newCharacter);
   }
 
-  public async getMyCharacters(id: number): Promise<Character[]> {
-    const user = await this.userService.getById(id);
+  public async getMyCharacters(user: User): Promise<Character[]> {
     return this.characterRepository.find({ where: { user } });
   }
 
   public async getCharacterById(
     characterId: number,
-    userId: number,
+    user: User,
   ): Promise<Character[]> {
-    const user = await this.userService.getById(userId);
     return this.characterRepository.find({
       where: { id: characterId, user },
     });
@@ -50,9 +45,9 @@ export class CharacterService {
 
   public async deleteCharacter(
     characterId: number,
-    userId: number,
+    user: User,
   ): Promise<string> {
-    const characters = await this.getCharacterById(characterId, userId);
+    const characters = await this.getCharacterById(characterId, user);
     const character = characters.pop();
     if (!character) {
       throw new NotFoundException(
@@ -65,10 +60,10 @@ export class CharacterService {
 
   public async updateCharacterInfo(
     characterId: number,
-    userId: number,
+    user: User,
     updateCharacterInfo: UpdateCharacterInfoDto,
   ) {
-    const characters = await this.getCharacterById(characterId, userId);
+    const characters = await this.getCharacterById(characterId, user);
     const character = characters.pop();
 
     if (updateCharacterInfo.characterName) {
@@ -83,10 +78,10 @@ export class CharacterService {
 
   public async updateCharacterStats(
     characterId: number,
-    userId: number,
+    user: User,
     updateCharacterStats: UpdateCharacterStatsDto,
   ) {
-    const characters = await this.getCharacterById(characterId, userId);
+    const characters = await this.getCharacterById(characterId, user);
     const character = characters.pop();
 
     const usedPoints = Object.values(updateCharacterStats).reduce(

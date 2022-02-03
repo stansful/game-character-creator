@@ -24,12 +24,12 @@ export class CharacterController {
 
   @Get()
   async getAll(@Req() req: ReqUserInterface) {
-    return this.characterService.getMyCharacters(req.user.id);
+    return this.characterService.getMyCharacters(req.user);
   }
 
   @Get(':id')
   async getOne(@Param('id') id: number, @Req() req: ReqUserInterface) {
-    return this.characterService.getCharacterById(id, req.user.id);
+    return this.characterService.getCharacterById(id, req.user);
   }
 
   @Post()
@@ -37,12 +37,12 @@ export class CharacterController {
     @Body() createCharacter: CreateCharacterDto,
     @Req() req: ReqUserInterface,
   ) {
-    return this.characterService.createCharacter(createCharacter, req.user.id);
+    return this.characterService.createCharacter(createCharacter, req.user);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: number, @Req() req: ReqUserInterface) {
-    return this.characterService.deleteCharacter(id, req.user.id);
+    return this.characterService.deleteCharacter(id, req.user);
   }
 
   @Put(':id')
@@ -53,7 +53,7 @@ export class CharacterController {
   ) {
     return this.characterService.updateCharacterInfo(
       id,
-      req.user.id,
+      req.user,
       patchCharacter,
     );
   }
@@ -66,7 +66,7 @@ export class CharacterController {
   ) {
     return this.characterService.updateCharacterStats(
       id,
-      req.user.id,
+      req.user,
       updateCharacterStats,
     );
   }
