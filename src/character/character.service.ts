@@ -37,25 +37,23 @@ export class CharacterService {
   public async getCharacterById(
     characterId: number,
     user: User,
-  ): Promise<Character[]> {
-    return this.characterRepository.find({
+  ): Promise<Character> {
+    const characters = await this.characterRepository.find({
       where: { id: characterId, user },
     });
-  }
 
-  public async deleteCharacter(
-    characterId: number,
-    user: User,
-  ): Promise<string> {
-    const characters = await this.getCharacterById(characterId, user);
     const character = characters.pop();
     if (!character) {
       throw new NotFoundException(
         `Character with id: ${characterId} not found or belongs to another person`,
       );
     }
-    await this.characterRepository.delete(characterId);
-    return 'Character successfully deleted';
+    return character;
+  }
+
+  public async deleteCharacter(characterId: number, user: User) {
+    const character = await this.getCharacterById(characterId, user);
+    return this.characterRepository.delete(character.id);
   }
 
   public async updateCharacterInfo(
@@ -63,16 +61,9 @@ export class CharacterService {
     user: User,
     updateCharacterInfo: UpdateCharacterInfoDto,
   ) {
-    const characters = await this.getCharacterById(characterId, user);
-    const character = characters.pop();
-
-    if (updateCharacterInfo.characterName) {
-      character.characterName = updateCharacterInfo.characterName;
-    }
-    if (updateCharacterInfo.age) {
-      character.age = updateCharacterInfo.age;
-    }
-
+    const character = await this.getCharacterById(characterId, user);
+    character.characterName = updateCharacterInfo.characterName;
+    character.age = updateCharacterInfo.age;
     return this.characterRepository.update({ id: characterId }, character);
   }
 
@@ -81,25 +72,22 @@ export class CharacterService {
     user: User,
     updateCharacterStats: UpdateCharacterStatsDto,
   ) {
-    const characters = await this.getCharacterById(characterId, user);
-    const character = characters.pop();
+    const character = await this.getCharacterById(characterId, user);
 
     const usedPoints = Object.values(updateCharacterStats).reduce(
       (sum, value) => sum + value,
     );
-
     if (usedPoints > character.availablePoints) {
       throw new BadRequestException(
         `Not enough points. Available points: ${character.availablePoints}, used: ${usedPoints}`,
       );
     }
 
-    character.availablePoints -= usedPoints;
-
     const updatedCharacter = this.increaseCharacterStats(
       updateCharacterStats,
       character,
     );
+    updatedCharacter.availablePoints -= usedPoints;
 
     return this.characterRepository.update(
       { id: characterId },
@@ -107,9 +95,8 @@ export class CharacterService {
     );
   }
 
-  // TODO: find another way to do this?..
-  private increaseCharacterStats<UpdateType>(
-    updateInfo: UpdateType,
+  private increaseCharacterStats(
+    updateInfo: UpdateCharacterStatsDto,
     character: Character,
   ): Character {
     const statNames = Object.keys(updateInfo);
