@@ -6,14 +6,16 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/createCharacter.dto';
-import { PatchCharacterDto } from './dto/patchCharacter.dto';
+import { UpdateCharacterInfoDto } from './dto/updateCharacterInfo.dto';
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { ReqUserInterface } from '../auth/interfaces/reqUser.interface';
+import { UpdateCharacterStatsDto } from './dto/updateCharacterStats.dto';
 
 @UseGuards(JwtGuard)
 @Controller('character')
@@ -21,13 +23,13 @@ export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
   @Get()
-  async getAll() {
-    return this.characterService.getAllCharacters();
+  async getAll(@Req() req: ReqUserInterface) {
+    return this.characterService.getMyCharacters(req.user.id);
   }
 
-  @Get()
-  async getOne(@Param(':id') id: number) {
-    return this.characterService.getCharacterById(id);
+  @Get(':id')
+  async getOne(@Param('id') id: number, @Req() req: ReqUserInterface) {
+    return this.characterService.getCharacterById(id, req.user.id);
   }
 
   @Post()
@@ -38,16 +40,34 @@ export class CharacterController {
     return this.characterService.createCharacter(createCharacter, req.user.id);
   }
 
-  @Delete()
-  async delete(@Param(':id') id: number) {
-    return this.characterService.deleteCharacter(id);
+  @Delete(':id')
+  async delete(@Param('id') id: number, @Req() req: ReqUserInterface) {
+    return this.characterService.deleteCharacter(id, req.user.id);
   }
 
-  @Patch()
-  async patch(
-    @Param(':id') id: number,
-    @Body() patchCharacter: PatchCharacterDto,
+  @Put(':id')
+  async updateInfo(
+    @Param('id') id: number,
+    @Body() patchCharacter: UpdateCharacterInfoDto,
+    @Req() req: ReqUserInterface,
   ) {
-    return this.characterService.patchCharacter(id, patchCharacter);
+    return this.characterService.updateCharacterInfo(
+      id,
+      req.user.id,
+      patchCharacter,
+    );
+  }
+
+  @Patch(':id')
+  async updateStats(
+    @Param('id') id: number,
+    @Body() updateCharacterStats: UpdateCharacterStatsDto,
+    @Req() req: ReqUserInterface,
+  ) {
+    return this.characterService.updateCharacterStats(
+      id,
+      req.user.id,
+      updateCharacterStats,
+    );
   }
 }
