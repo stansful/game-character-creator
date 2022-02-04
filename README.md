@@ -1,8 +1,6 @@
 ## Installation
 
 ```bash
-$ npm install
-    or
 $ yarn install
 ```
 
@@ -11,12 +9,8 @@ $ yarn install
 ```bash
 remove '.example' from env files.
 
-$ docker-compose up
-    or
 $ docker-compose up -d
 
-$ npm run start:dev
-    or
 $ yarn start:dev
 ```
 
