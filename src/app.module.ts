@@ -4,7 +4,7 @@ import { UserModule } from './user/user.module';
 import { HashModule } from './hash/hash.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmConfigService } from './config/typeOrmConfig.service';
+import { TypeOrmConfigurationService } from './config/typeOrmConfiguration.service';
 import { AuthModule } from './auth/auth.module';
 import { CharacterModule } from './character/character.module';
 
@@ -13,7 +13,7 @@ import { CharacterModule } from './character/character.module';
     ConfigurationModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useClass: TypeOrmConfigService,
+      useClass: TypeOrmConfigurationService,
     }),
     UserModule,
     HashModule,
