@@ -5,7 +5,7 @@ import { UserModule } from '../user/user.module';
 import { HashModule } from '../hash/hash.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import { JwtConfigService } from '../config/jwtConfig.service';
+import { JwtConfigurationService } from '../config/jwtConfiguration.service';
 import { PassportModule } from '@nestjs/passport';
 
 @Module({
@@ -15,7 +15,7 @@ import { PassportModule } from '@nestjs/passport';
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useClass: JwtConfigService,
+      useClass: JwtConfigurationService,
     }),
   ],
   controllers: [AuthController],

@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ApiConfiguration, ConfigTypes } from '../config/apiConfiguration';
 import * as bcrypt from 'bcrypt';
+import { Configuration } from '../config/interfaces/configuration.interface';
+import { ConfigurationTypes } from '../config/enums/configurationTypes.enum';
 
 @Injectable()
 export class HashService {
-  constructor(
-    private readonly configService: ConfigService<ApiConfiguration>,
-  ) {}
+  constructor(private readonly configService: ConfigService<Configuration>) {}
 
   public async hashPassword(password: string): Promise<string> {
     const saltOrRound = this.configService.get(
-      ConfigTypes.BCRYPT_SALT_OR_ROUNDS,
+      ConfigurationTypes.BCRYPT_SALT_OR_ROUNDS,
     );
     return bcrypt.hash(password, saltOrRound);
   }

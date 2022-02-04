@@ -1,9 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { ApiConfiguration, ConfigTypes } from './config/apiConfiguration';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
+import { Configuration } from './config/interfaces/configuration.interface';
+import { ConfigurationTypes } from './config/enums/configurationTypes.enum';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,8 +13,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: false }));
 
-  const configService: ConfigService<ApiConfiguration> = app.get(ConfigService);
-  const port = configService.get(ConfigTypes.PORT);
+  const configService: ConfigService<Configuration> = app.get(ConfigService);
+  const port = configService.get(ConfigurationTypes.PORT);
 
   await app.listen(port, () =>
     console.log(`Server on http://localhost:${port}`),
