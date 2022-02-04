@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -9,6 +10,7 @@ import {
   Put,
   Req,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/createCharacter.dto';
@@ -32,6 +34,7 @@ export class CharacterController {
     return this.characterService.getCharacterById(id, req.user);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   async create(
     @Body() createCharacter: CreateCharacterDto,

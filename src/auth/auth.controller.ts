@@ -1,10 +1,12 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   HttpCode,
   HttpStatus,
   Post,
   Res,
+  UseInterceptors,
 } from '@nestjs/common';
 import { SignUpDto } from './dto/signUp.dto';
 import { AuthService } from './auth.service';
@@ -15,6 +17,7 @@ import { Response } from 'express';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post('signUp')
   async registration(@Body() signUp: SignUpDto) {
     return this.authService.signUp(signUp);
