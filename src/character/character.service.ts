@@ -62,9 +62,14 @@ export class CharacterService {
     updateCharacterInfo: UpdateCharacterInfoDto,
   ) {
     const character = await this.getCharacterById(characterId, user);
-    character.characterName = updateCharacterInfo.characterName;
-    character.age = updateCharacterInfo.age;
-    return this.characterRepository.update({ id: characterId }, character);
+
+    return this.characterRepository.update(
+      { id: character.id },
+      {
+        characterName: updateCharacterInfo.characterName,
+        age: updateCharacterInfo.age,
+      },
+    );
   }
 
   public async updateCharacterStats(
