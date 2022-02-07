@@ -15,18 +15,26 @@ import { ConfigurationTypes } from './enums/configurationTypes.enum';
       load: [customConfiguration],
       validationSchema: Joi.object<Configuration>({
         [ConfigurationTypes.PORT]: Joi.number().required(),
+
         [ConfigurationTypes.POSTGRES_HOST]: Joi.string().required(),
         [ConfigurationTypes.POSTGRES_PORT]: Joi.number().required(),
         [ConfigurationTypes.POSTGRES_USER]: Joi.string().required(),
         [ConfigurationTypes.POSTGRES_PASSWORD]: Joi.string().required(),
         [ConfigurationTypes.POSTGRES_DB]: Joi.string().required(),
+
         [ConfigurationTypes.BCRYPT_SALT_OR_ROUNDS]: Joi.number().required(),
+
         [ConfigurationTypes.JWT_ACCESS_SECRET]: Joi.string().required(),
         [ConfigurationTypes.JWT_REFRESH_SECRET]: Joi.string().required(),
         [ConfigurationTypes.JWT_ACCESS_EXPIRATION_TIME]:
           Joi.number().required(),
         [ConfigurationTypes.JWT_REFRESH_EXPIRATION_TIME]:
           Joi.string().required(),
+
+        [ConfigurationTypes.SMTP_HOST]: Joi.string().required(),
+        [ConfigurationTypes.SMTP_PORT]: Joi.number().required(),
+        [ConfigurationTypes.SMTP_USER]: Joi.string().email().required(),
+        [ConfigurationTypes.SMTP_PASSWORD]: Joi.string().required(),
       }),
     }),
   ],

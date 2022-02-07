@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmConfigurationService } from './config/typeOrmConfiguration.service';
 import { AuthModule } from './auth/auth.module';
 import { CharacterModule } from './character/character.module';
+import { MailModule } from './mail/mail.module';
+import { UuidModule } from './uuid/uuid.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { CharacterModule } from './character/character.module';
     HashModule,
     AuthModule,
     CharacterModule,
+    MailModule,
+    UuidModule,
   ],
 })
 export class AppModule {}
