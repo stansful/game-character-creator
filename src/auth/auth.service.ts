@@ -8,6 +8,7 @@ import { User } from '../user/user.entity';
 import { TokensInterface } from './interfaces/tokens.interface';
 import { ConfigService } from '@nestjs/config';
 import { ConfigurationTypes } from '../config/enums/configurationTypes.enum';
+import { Configuration } from '../config/interfaces/configuration.interface';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
     private userService: UserService,
     private jwtService: JwtService,
     private hashService: HashService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService<Configuration>,
   ) {}
 
   async refreshToken(user: User) {
