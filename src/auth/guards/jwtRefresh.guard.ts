@@ -10,13 +10,14 @@ import { UserService } from '../../user/user.service';
 import { JwtPayloadInterface } from '../interfaces/jwtPayload.interface';
 import { ConfigService } from '@nestjs/config';
 import { ConfigurationTypes } from '../../config/enums/configurationTypes.enum';
+import { Configuration } from '../../config/interfaces/configuration.interface';
 
 @Injectable()
 export class JwtRefreshGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private userService: UserService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService<Configuration>,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {

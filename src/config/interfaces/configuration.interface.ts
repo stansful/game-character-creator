@@ -15,4 +15,9 @@ export interface Configuration {
   [ConfigurationTypes.JWT_REFRESH_SECRET]: string;
   [ConfigurationTypes.JWT_ACCESS_EXPIRATION_TIME]: number;
   [ConfigurationTypes.JWT_REFRESH_EXPIRATION_TIME]: string;
+
+  [ConfigurationTypes.SMTP_HOST]: string;
+  [ConfigurationTypes.SMTP_PORT]: number;
+  [ConfigurationTypes.SMTP_USER]: string;
+  [ConfigurationTypes.SMTP_PASSWORD]: string;
 }

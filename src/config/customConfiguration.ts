@@ -22,4 +22,9 @@ export const customConfiguration: ConfigFactory<Configuration> = () => ({
   ),
   [ConfigurationTypes.JWT_REFRESH_EXPIRATION_TIME]:
     process.env.JWT_REFRESH_EXPIRATION_TIME,
+
+  [ConfigurationTypes.SMTP_HOST]: process.env.SMTP_HOST,
+  [ConfigurationTypes.SMTP_PORT]: Number(process.env.SMTP_PORT),
+  [ConfigurationTypes.SMTP_USER]: process.env.SMTP_USER,
+  [ConfigurationTypes.SMTP_PASSWORD]: process.env.SMTP_PASSWORD,
 });
