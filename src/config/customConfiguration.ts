@@ -15,8 +15,11 @@ export const customConfiguration: ConfigFactory<Configuration> = () => ({
     process.env.BCRYPT_SALT_OR_ROUNDS,
   ),
 
-  [ConfigurationTypes.JWT_SECRET]: process.env.JWT_SECRET,
-  [ConfigurationTypes.JWT_EXPIRATION_TIME]: Number(
-    process.env.JWT_EXPIRATION_TIME,
+  [ConfigurationTypes.JWT_ACCESS_SECRET]: process.env.JWT_ACCESS_SECRET,
+  [ConfigurationTypes.JWT_REFRESH_SECRET]: process.env.JWT_REFRESH_SECRET,
+  [ConfigurationTypes.JWT_ACCESS_EXPIRATION_TIME]: Number(
+    process.env.JWT_ACCESS_EXPIRATION_TIME,
   ),
+  [ConfigurationTypes.JWT_REFRESH_EXPIRATION_TIME]:
+    process.env.JWT_REFRESH_EXPIRATION_TIME,
 });

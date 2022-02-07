@@ -21,8 +21,12 @@ import { ConfigurationTypes } from './enums/configurationTypes.enum';
         [ConfigurationTypes.POSTGRES_PASSWORD]: Joi.string().required(),
         [ConfigurationTypes.POSTGRES_DB]: Joi.string().required(),
         [ConfigurationTypes.BCRYPT_SALT_OR_ROUNDS]: Joi.number().required(),
-        [ConfigurationTypes.JWT_SECRET]: Joi.string().required(),
-        [ConfigurationTypes.JWT_EXPIRATION_TIME]: Joi.number().required(),
+        [ConfigurationTypes.JWT_ACCESS_SECRET]: Joi.string().required(),
+        [ConfigurationTypes.JWT_REFRESH_SECRET]: Joi.string().required(),
+        [ConfigurationTypes.JWT_ACCESS_EXPIRATION_TIME]:
+          Joi.number().required(),
+        [ConfigurationTypes.JWT_REFRESH_EXPIRATION_TIME]:
+          Joi.string().required(),
       }),
     }),
   ],

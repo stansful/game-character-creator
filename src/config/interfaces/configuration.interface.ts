@@ -11,6 +11,8 @@ export interface Configuration {
 
   [ConfigurationTypes.BCRYPT_SALT_OR_ROUNDS]: number;
 
-  [ConfigurationTypes.JWT_SECRET]: string;
-  [ConfigurationTypes.JWT_EXPIRATION_TIME]: number;
+  [ConfigurationTypes.JWT_ACCESS_SECRET]: string;
+  [ConfigurationTypes.JWT_REFRESH_SECRET]: string;
+  [ConfigurationTypes.JWT_ACCESS_EXPIRATION_TIME]: number;
+  [ConfigurationTypes.JWT_REFRESH_EXPIRATION_TIME]: string;
 }
