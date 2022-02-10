@@ -62,7 +62,7 @@ export class AuthController {
     res.cookie('access_token', `Bearer ${tokens.access_token}`, {
       httpOnly: true,
     });
-    res.cookie('refresh_token', `Bearer ${tokens.access_token}`, {
+    res.cookie('refresh_token', `Bearer ${tokens.refresh_token}`, {
       httpOnly: true,
     });
   }
