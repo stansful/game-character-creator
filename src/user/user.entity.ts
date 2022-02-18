@@ -26,6 +26,13 @@ export class User {
   @Column()
   password: string;
 
+  @Exclude()
+  @Column({ nullable: true })
+  activationLink: string;
+
+  @Column({ default: false })
+  activated: boolean;
+
   @OneToOne(() => Profile, { eager: true, cascade: true })
   @JoinColumn()
   profile: Profile;

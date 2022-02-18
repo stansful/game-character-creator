@@ -19,7 +19,7 @@ export class AuthService {
     private readonly configService: ConfigService<Configuration>,
   ) {}
 
-  async refreshToken(user: User) {
+  public async refreshToken(user: User) {
     return this.generateTokens(user);
   }
 
@@ -40,6 +40,7 @@ export class AuthService {
       email: user.email,
     };
 
+    // TODO: refresh token currently use useClass.config instead of "refresh secret & refresh exp. time"
     const [access_token, refresh_token] = await Promise.all([
       this.jwtService.signAsync(payload),
       this.jwtService.signAsync(payload, {
